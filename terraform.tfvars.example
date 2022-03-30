@@ -1,4 +1,7 @@
 aws_region     = "us-east-1"
 aws_access_key = "your access key"
 aws_secret_key = "your secret key"
-
+bucket_name=bucket-name
+force_destroy=true
+ami_id=ami-085925f297f89fce1
+instance_type=t2.micro

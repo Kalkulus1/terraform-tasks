@@ -30,3 +30,14 @@ variable "tags" {
     "Owner" : "InfraTeam"
   }
 }
+
+variable "ami_id" {
+  description = "this is ubuntu ami id in us-east-1"
+  default     = "ami-085925f297f89fce1"
+}
+
+variable "instance_type" {
+  description = "this is instance type"
+  default     = "t2.micro"
+}
+

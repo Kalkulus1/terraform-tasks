@@ -22,3 +22,38 @@ resource "aws_key_pair" "key" {
 }
 
 resource "aws_default_vpc" "default_vpc" {}
+
+resource "aws_security_group" "allow_ssh" {
+  name        = "allow_ssh"
+  description = "Allow ssh inbound traffic"
+
+  # using default VPC
+  vpc_id = aws_default_vpc.default_vpc.id
+
+  ingress {
+    description = "SSH from the Internet"
+
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+
+    # allow all traffic
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = merge(var.tags, tomap({ "Type" : "Allow SSH" }))
+}
+
+
+resource "aws_instance" "flugel_ec2_instance" {
+  ami           = var.ami_id
+  instance_type = var.instance_type
+
+  # reference to key
+  key_name = aws_key_pair.key.key_name
+
+  # reference to security group
+  security_groups = [aws_security_group.allow_ssh.name]
+
+  tags = var.tags
+}
