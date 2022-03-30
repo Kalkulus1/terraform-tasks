@@ -13,7 +13,7 @@ variable "aws_region" {
 variable "bucket_name" {
   description = "(Required) Creates a unique bucket name"
   type        = string
-  default     = "flugel-bucket-24453235245"
+  default     = "flugel-bucket-572485369832753452365"
 }
 
 variable "force_destroy" {

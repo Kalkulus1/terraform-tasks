@@ -14,3 +14,8 @@ terraform-apply:
 
 terraform-destroy:
 	terraform destroy
+
+go-tests:
+	cd test && \
+	go test -v && \
+	cd ..

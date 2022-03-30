@@ -2,6 +2,7 @@
 Tasks
 
 ## Install Terraform
+For debian based installation
 ```sh
 #! /bin/bash
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
@@ -77,4 +78,10 @@ terraform fmt
 terraform validate
 terraform apply
 terraform destroy
+```
+
+
+### Run go Tets
+```sh
+make go-tests
 ```

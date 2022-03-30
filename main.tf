@@ -17,7 +17,7 @@ resource "aws_s3_bucket_acl" "aws_s3_bucket_acl" {
 
 
 resource "aws_key_pair" "key" {
-  key_name   = "servers_key"
+  key_name   = "servers_ssh_key"
   public_key = file("~/.ssh/servers.pub")
 }
 
@@ -53,7 +53,7 @@ resource "aws_instance" "flugel_ec2_instance" {
   key_name = aws_key_pair.key.key_name
 
   # reference to security group
-  security_groups = [aws_security_group.allow_ssh.id]
+  vpc_security_group_ids = [aws_security_group.allow_ssh.id]
 
   associate_public_ip_address = true
 
