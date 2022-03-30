@@ -18,7 +18,7 @@ resource "aws_s3_bucket_acl" "aws_s3_bucket_acl" {
 
 resource "aws_key_pair" "key" {
   key_name   = "servers_ssh_key"
-  public_key = file("~/.ssh/servers.pub")
+  public_key = var.public_key
 }
 
 resource "aws_default_vpc" "default_vpc" {}
