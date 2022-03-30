@@ -59,3 +59,40 @@ resource "aws_instance" "flugel_ec2_instance" {
 
   tags = var.tags
 }
+
+
+# Task 2 starting...
+
+# Create VPC
+resource "aws_vpc" "flugel_vpc" {
+  cidr_block = var.vpc_cidr_block
+
+  tags = var.tags
+}
+
+
+# Create Internet Gateway
+
+resource "aws_internet_gateway" "flugel_igw" {
+  vpc_id = aws_vpc.flugel_vpc.id
+
+  tags = var.tags
+}
+
+# Create Route Table
+
+resource "aws_route_table" "flugel_route_table" {
+  vpc_id = aws_vpc.flugel_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.flugel_igw.id
+  }
+
+  route {
+    ipv6_cidr_block = "::/0"
+    gateway_id      = aws_internet_gateway.flugel_igw.id
+  }
+
+  tags = var.tags
+}
