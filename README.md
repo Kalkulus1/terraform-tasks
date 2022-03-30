@@ -26,6 +26,8 @@ ssh-keygen
 ```
 You can name it as `servers`
 
+`you will update the public key in the environment variables`
+
 ### .env file
 
 ```sh
@@ -34,12 +36,18 @@ cp .env.example .env
 
 ### Update the .env files
 ```sh
-TF_VAR_aws_region="us-east-1"
-TF_VAR_aws_access_key="your access key"
-TF_VAR_aws_secret_key="your secret key"
-TF_VAR_bucket_name="your bucket name"
-TF_VAR_force_destroy="your boolean value"
+aws_region     = "us-east-1"
+aws_access_key = "your access key"
+aws_secret_key = "your secret key"
+bucket_name=bucket-name
+force_destroy=true
+ami_id=ami-085925f297f89fce1
+instance_type=t2.micro
+
+TF_VAR_public_key=the-public-key-generated
 ```
+
+`Update them based on your preference`
 
 ### Running makefile
 
