@@ -17,6 +17,13 @@ chmod +x install_terraform.sh
 ./install_terraform.sh
 ```
 
+### Generate ssh keys
+
+```sh
+cd ~/.ssh
+ssh-keygen
+```
+You can name it as `servers`
 
 ### .env file
 
