@@ -16,13 +16,16 @@ jobs:
         go-version: [1.14]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-go@v1
         with:
           go-version: ${{ matrix.go-version }}
       - uses: autero1/action-terraform@v0.1.0
         with:
           terraform_version: 0.12.20
+      
+      - name: Interact with Terraform
+        run: terraform --version
 
       - name: Download Go Modules
         working-directory: test
