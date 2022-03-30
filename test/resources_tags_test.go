@@ -22,8 +22,14 @@ func TestResourcesTags(t *testing.T) {
 	// Clean up resources with "terraform destroy" at the end of the test.
 	defer terraform.Destroy(t, terraformOptions)
 
-	// Run "terraform init" and "terraform apply". Fail the test if there are any errors.
-	terraform.InitAndApply(t, terraformOptions)
+	// Run "terraform init". Fail the test if there are any errors.
+	terraform.Init(t, terraformOptions)
+
+	// Run "terraform plan"
+	terraform.Plan(t, terraformOptions)
+
+	// Run "terraform apply". Fail the test if there are any errors.
+	terraform.Apply(t, terraformOptions)
 
 	// Bucket checks
 	bucketName := terraform.Output(t, terraformOptions, "bucket_name")
