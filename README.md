@@ -54,3 +54,20 @@ Destroy changes
 ```sh
 make terraform-destroy
 ```
+
+### Running with terraform commands without using Makefile
+
+Copy `terraform.tfvars.example` to `terraform.tfvars`
+```sh
+cp terraform.tfvars.example terraform.tfvars
+```
+
+Run terraform commands
+
+```sh
+terraform init
+terraform fmt
+terraform validate
+terraform apply
+terraform destroy
+```
