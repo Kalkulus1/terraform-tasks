@@ -72,7 +72,6 @@ resource "aws_vpc" "flugel_vpc" {
 
 
 # Create Internet Gateway
-
 resource "aws_internet_gateway" "flugel_igw" {
   vpc_id = aws_vpc.flugel_vpc.id
 
@@ -80,7 +79,6 @@ resource "aws_internet_gateway" "flugel_igw" {
 }
 
 # Create Route Table
-
 resource "aws_route_table" "flugel_route_table" {
   vpc_id = aws_vpc.flugel_vpc.id
 
@@ -95,4 +93,20 @@ resource "aws_route_table" "flugel_route_table" {
   }
 
   tags = var.tags
+}
+
+# Create Subnet
+resource "aws_subnet" "public_subnet" {
+  vpc_id     = aws_vpc.flugel_vpc.id
+  cidr_block = "10.0.${count.index + 1}.0/24"
+  count      = 2
+
+  tags = var.tags
+}
+
+# Associate subnet with Route Table
+resource "aws_route_table_association" "route_association" {
+  count          = 2
+  subnet_id      = element(aws_subnet.public_subnet.*.id, count.index + 1)
+  route_table_id = aws_route_table.flugel_route_table.id
 }
