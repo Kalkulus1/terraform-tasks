@@ -177,7 +177,7 @@ resource "aws_instance" "flugel_task2_ec2_instance" {
 
   vpc_security_group_ids = [aws_security_group.allow_web.id]
 
-  user_data = "${file("installations.sh")}"
+  user_data = file("installations.sh")
   tags      = var.tags
 
   depends_on = [aws_security_group.allow_web]

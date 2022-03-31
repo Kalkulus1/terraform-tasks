@@ -2,18 +2,26 @@ include .env
 export $(shell sed 's/=.*//' .env)
 
 terraform-init:
-	terraform init
+	cd tasks && \
+	terraform init && \
+	cd ..
 
 terraform-plan:
+	cd tasks && \
 	terraform fmt && \
 	terraform validate && \
-	terraform plan
+	terraform plan && \
+	cd ..
 
 terraform-apply:
-	terraform apply
+	cd tasks && \
+	terraform apply && \
+	cd ..
 
 terraform-destroy:
-	terraform destroy
+	cd tasks && \
+	terraform destroy && \
+	cd ..
 
 go-tests:
 	cd test && \
