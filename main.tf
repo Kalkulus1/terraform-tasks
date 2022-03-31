@@ -50,7 +50,7 @@ resource "aws_instance" "flugel_ec2_instance" {
   instance_type = var.instance_type
 
   # reference to key
-  key_name = aws_key_pair.key.key_name
+  # key_name = aws_key_pair.key.key_name
 
   # reference to security group
   vpc_security_group_ids = [aws_security_group.allow_ssh.id]
@@ -107,7 +107,7 @@ resource "aws_subnet" "public_subnet" {
 # Associate subnet with Route Table
 resource "aws_route_table_association" "route_association" {
   count          = 2
-  subnet_id      = element(aws_subnet.public_subnet.*.id, count.index + 1)
+  subnet_id      = element(aws_subnet.public_subnet.*.id, count.index)
   route_table_id = aws_route_table.flugel_route_table.id
 }
 
@@ -149,3 +149,26 @@ resource "aws_security_group" "allow_web" {
   tags = var.tags
 }
 
+
+resource "aws_instance" "flugel_task2_ec2_instance" {
+  count                       = 2
+  ami                         = var.ami_id
+  instance_type               = var.instance_type
+  subnet_id                   = aws_subnet.public_subnet[0].id
+  associate_public_ip_address = true
+
+  # key_name                    = aws_key_pair.key.key_name
+
+  vpc_security_group_ids = [aws_security_group.allow_web.id]
+
+  user_data = <<-EOF
+              #!/bin/bash
+              sudo apt update -y
+              sudo apt install nginx -y
+              sudo systemctl start nginx
+              sudo bash -c 'echo 'Flugel Task 2 Instance > /var/www/html/index.html'
+              EOF
+  tags      = var.tags
+
+  depends_on = [aws_security_group.allow_web]
+}
