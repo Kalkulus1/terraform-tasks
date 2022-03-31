@@ -33,3 +33,7 @@ output "flugel_task2_instances_public_ip" {
 output "public_ip" {
   value = zipmap(aws_instance.flugel_task2_ec2_instance.*.id, aws_eip.eip.*.public_ip)
 }
+
+output "alb_dns_name" {
+  value = aws_lb.load_balancer.dns_name
+}

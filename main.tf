@@ -131,6 +131,22 @@ resource "aws_security_group" "allow_web" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  # HTTP access from the VPC
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  # HTTPS access from the VPC
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
   ingress {
     description = "SSH"
     from_port   = 22
@@ -166,7 +182,7 @@ resource "aws_instance" "flugel_task2_ec2_instance" {
               sudo apt update -y
               sudo apt install nginx -y
               sudo systemctl start nginx
-              sudo bash -c 'echo 'Flugel Task 2 Instance > /var/www/html/index.html'
+              sudo echo 'Flugel Task 2 Instance' > /var/www/html/index.html
               EOF
   tags      = var.tags
 
