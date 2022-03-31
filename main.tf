@@ -149,12 +149,12 @@ resource "aws_security_group" "allow_web" {
   tags = var.tags
 }
 
-
+# Create the two ec2 instances
 resource "aws_instance" "flugel_task2_ec2_instance" {
-  count                       = 2
+  count                       = length(aws_subnet.public_subnet.*.id)
   ami                         = var.ami_id
   instance_type               = var.instance_type
-  subnet_id                   = aws_subnet.public_subnet[0].id
+  subnet_id                   = element(aws_subnet.public_subnet.*.id, count.index)
   associate_public_ip_address = true
 
   # key_name                    = aws_key_pair.key.key_name
@@ -172,3 +172,21 @@ resource "aws_instance" "flugel_task2_ec2_instance" {
 
   depends_on = [aws_security_group.allow_web]
 }
+
+# Create Elastic IPs
+resource "aws_eip" "eip" {
+  count            = length(aws_instance.flugel_task2_ec2_instance.*.id)
+  instance         = element(aws_instance.flugel_task2_ec2_instance.*.id, count.index)
+  public_ipv4_pool = "amazon"
+  vpc              = true
+
+  tags = var.tags
+}
+
+# Create EIP association with EC2 Instances
+resource "aws_eip_association" "eip_association" {
+  count         = length(aws_eip.eip)
+  instance_id   = element(aws_instance.flugel_task2_ec2_instance.*.id, count.index)
+  allocation_id = element(aws_eip.eip.*.id, count.index)
+}
+
