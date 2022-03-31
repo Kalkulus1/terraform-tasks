@@ -177,13 +177,7 @@ resource "aws_instance" "flugel_task2_ec2_instance" {
 
   vpc_security_group_ids = [aws_security_group.allow_web.id]
 
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo apt update -y
-              sudo apt install nginx -y
-              sudo systemctl start nginx
-              sudo echo 'Flugel Task 2 Instance' > /var/www/html/index.html
-              EOF
+  user_data = "${file("installations.sh")}"
   tags      = var.tags
 
   depends_on = [aws_security_group.allow_web]
