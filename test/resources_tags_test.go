@@ -13,7 +13,7 @@ func TestResourcesTags(t *testing.T) {
 	// retryable errors in terraform testing.
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		// Set the path to the Terraform code that will be tested.
-		TerraformDir: "../.",
+		TerraformDir: "../tasks/",
 	})
 
 	// AWS Region

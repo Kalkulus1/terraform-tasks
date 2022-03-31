@@ -75,12 +75,13 @@ make terraform-destroy
 
 Copy `terraform.tfvars.example` to `terraform.tfvars`
 ```sh
-cp terraform.tfvars.example terraform.tfvars
+cp tasks/terraform.tfvars.example tasks/terraform.tfvars
 ```
 
 Run terraform commands
 
 ```sh
+cd tasks
 terraform init
 terraform fmt
 terraform validate

@@ -6,4 +6,6 @@ force_destroy=true
 ami_id=ami-085925f297f89fce1
 instance_type=t2.micro
 
-TF_VAR_public_key=the-public-key-generated
+public_key=the-public-key-generated
+
+vpc_cidr_block = "10.0.0.0/16"
